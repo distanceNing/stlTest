@@ -1,0 +1,4 @@
+﻿  maincpp.cpp
+d:\documents\visual studio 2013\projects\数据结构\链表\链表\list_practice.h(90): warning C4715: “linkList<int>::delete_listData”: 不是所有的控件路径都返回值
+  链表.vcxproj -> D:\Documents\Visual Studio 2013\Projects\数据结构\链表\Debug\链表.exe
+  链表.vcxproj -> D:\Documents\Visual Studio 2013\Projects\数据结构\链表\Debug\链表.pdb (Full PDB)
