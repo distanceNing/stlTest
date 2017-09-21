@@ -166,7 +166,7 @@ int main()
 
 
 	long value = Test::getTargetLong();
-	Test::testSet(value);
+	Test::testVector(value);
 	
 	return 0;
 }
