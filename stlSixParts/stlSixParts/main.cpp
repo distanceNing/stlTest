@@ -7,7 +7,7 @@
 #include <deque>
 #include <set>
 #include <unordered_map>
-
+#include <map>
 
 
 using namespace std;
@@ -27,7 +27,6 @@ namespace Test
 		cin >> str;
 		return str;
 	}
-	
 
 	void testVector(long &value)
 	{
@@ -142,6 +141,30 @@ namespace Test
 		cout << "test.max_size() :" << test.max_size() << endl;
 		cout << "time cost : " << clock() - start << endl;
 	}
+	
+	void testMap()
+	{
+		map<int, string> test{ make_pair<int,string>(1,"one"),
+								make_pair<int,string>(2,"two"),
+								make_pair<int,string>(3,"three") };
+		if (test.at(1) == "aaaa")
+		{
+			cout << "compare" << endl;
+		}
+		
+		for (auto &i : test)
+		{
+			cout << i.second << endl;
+		}
+	}
+
+	void testInitList(initializer_list<int>  arg)
+	{
+		for (auto i : arg)
+		{
+			cout << i << endl;
+		}
+	}
 }
 int main()
 {
@@ -165,8 +188,9 @@ int main()
 	//cout << count_if(vi.begin(), vi.end(), not1(bind2nd(less<int>(), 3)));
 
 
-	long value = Test::getTargetLong();
-	Test::testVector(value);
-	
+	//long value = Test::getTargetLong();
+	//Test::testVector(value);
+	Test::testMap();
+	//Test::testInitList({ 1,2,3,4,5,6 });
 	return 0;
 }
