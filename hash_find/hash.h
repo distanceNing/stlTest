@@ -1,3 +1,6 @@
+#ifndef _HASH_H_ 
+#define _HASH_H_
+
 #include "list_practice.h"
 typedef  int Index;
 typedef int value;
@@ -23,15 +26,15 @@ public:
 	void FlagNode(T key);
 private:
 	int HashTableSize;
-	linkList<T> *TheLists;
+	linkList<T> *theLists;
 };
 template <class T>
 Hash<T>::Hash(int hashSize)
 {
 	
 	HashTableSize = hashSize;
-	TheLists = new linkList<T>[hashSize];
-	if (TheLists == NULL)
+	theLists = new linkList<T>[hashSize];
+	if (theLists == NULL)
 	{
 		cout << "Out of space" << endl;
 	}
@@ -39,7 +42,7 @@ Hash<T>::Hash(int hashSize)
 template <class T>
 Hash<T>::~Hash()
 {
-	delete []TheLists;
+	delete []theLists;
 }
 template <class T>
 Index Hash<T>::HashFun(T key)
@@ -51,7 +54,7 @@ template <class T>
 Node<T> *Hash<T>::Find(T key)
 {
 	int tempIndex = HashFun(key);
-	linkList<T> *temp = TheLists + tempIndex;
+	linkList<T> *temp = theLists + tempIndex;
 	return temp->GetListData(key);
 }
 template <class T>
@@ -63,7 +66,7 @@ void Hash<T>::Insert(T key)
 	{
 		
 		int tempIndex = HashFun(key);
-		linkList<T> *temp = TheLists + tempIndex;
+		linkList<T> *temp = theLists + tempIndex;
 		temp->Add_list(0, 1, key);
 	}
 	else
@@ -74,7 +77,7 @@ void Hash<T>::Insert(T key)
 template <class T>
 void Hash<T>::InsertTheKey(int keyIndex, T *key)
 {
-	linkList<T> *temp = TheLists+keyIndex;
+	linkList<T> *temp = theLists+keyIndex;
 	while (*key!='\0')
 	{
 		temp->instert_list(*key);
@@ -88,7 +91,9 @@ void Hash<T>::FlagNode(T key)
 	linkList<T> *temp;
 	for (int i = 0; i < HashTableSize; i++)
 	{
-		temp = TheLists + i;
+		temp = theLists + i;
 		temp->FlagTheNode(key);
 	}
 }
+
+#endif // !_HASH_H_ 
