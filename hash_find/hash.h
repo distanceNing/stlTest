@@ -25,6 +25,7 @@ public:
 	void InsertTheKey(int keyIndex,T *key);
 	void FlagNode(T key);
 private:
+	//TODO: ÓÃvectorÀ´´úÌæ
 	int HashTableSize;
 	linkList<T> *theLists;
 };
