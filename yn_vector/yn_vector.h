@@ -15,17 +15,20 @@ private:
 	// 设置为1.5可以利用到缓存
 	static const float kGrowFactors;
 public:
-	
 	typedef T value_type;
 	typedef T& reference;
 	typedef T* pointer;
 
-	
-	Vector()
+	Vector(size_t init_size = kInitSize, value_type init_value = value_type())
 	{
 		size_ = 0;
-		capacity_ = kInitSize;
-		data_ =static_cast<pointer> (common::alloc(capacity_* sizeof(value_type)));
+		capacity_ = init_size;
+		data_ = static_cast<pointer> (common::alloc(capacity_ * sizeof(value_type)));
+		//placement new
+		for (size_t i = 0;i < init_size;++i)
+		{
+			 new (data_+i) value_type(init_value);
+		}
 	}
 
 	~Vector(){
@@ -73,7 +76,7 @@ public:
 	
 	void sort();
 private:
-	void remalloc();
+	void remalloc(size_t size);
 	pointer data_;
 	size_t size_; 
 	size_t capacity_;
@@ -82,14 +85,21 @@ private:
 template <class T>
 const float Vector<T>::kGrowFactors = 1.5;
 template < class T >
-void Vector<T>::remalloc()
+void Vector<T>::remalloc(size_t size)
 {
-	size_t count = static_cast<size_t> (kGrowFactors*capacity());
+	size_t count= capacity();
+	do
+	{
+		count= static_cast<size_t> (kGrowFactors*count);
+	} while (count <= capacity_ + size);
+	
+	
 	pointer p = static_cast<pointer>(common::alloc(sizeof(value_type)*count));
 	assert(p != NULL);
 	memcpy(p, data_, sizeof(value_type)*size_);
 	delete []data_;
 	data_ = p;
+	capacity_ = count;
 }
 template < class T >
 void Vector<T>::push_back(const reference  value)
@@ -100,7 +110,7 @@ void Vector<T>::push_back(const reference  value)
 	}
 	else
 	{
-		remalloc();
+		remalloc(1);
 		data_[size_++] = value;
 	}
 }
@@ -115,21 +125,20 @@ template < class T >
 void Vector<T>::insert(size_t index, value_type data, size_t count)
 {
 	assert(index >= 0 && index <= size_);
-	size_ += count;
-	size_t i = 0;
 	if (size_+count<capacity_)
 		memmove(data_ + count + index, data_ + index, sizeof(size_ - index));
 	else
 	{
-		remalloc();
+		remalloc(count-capacity()+size());
 		memmove(data_ + count + index, data_ + index, sizeof(size_ - index));
 	}
+	size_ += count;
+	size_t i = 0;
 	while (count--)
 	{
 		*(data_ + index + i) = data;
 		i++;
 	}
-	
 }
 template < class T >
 void Vector<T>::sort()

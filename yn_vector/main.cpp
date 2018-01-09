@@ -1,9 +1,8 @@
-#include <iostream>
-#include <algorithm>
-using namespace std;
-#include "yn_vector.h"
-#include <vector>
 
+#include "yn_vector.h"
+#include "../test/test_common.h"
+#include <vector>
+#include <iostream>
 int main()
 {
 	ynstl::Vector<int> ar;
@@ -13,14 +12,16 @@ int main()
 	ar.push_back(6);
 	ar.push_back(5);
 
-	ar.insert(0,10);
+	ar.insert(0,10,10);
+	EXPECT_EQ_INT(15, ar.size());
+	EXPECT_EQ_INT(19, ar.capacity());
 	ar.erase(0, 2);
-
+	EXPECT_EQ_INT(13, ar.size());
 	for (size_t i = 0;i < ar.size();++i)
 	{
-		cout << ar[i] << "\n";
+		std::cout << ar[i] << "\t";
 	}
-	
+	printTestResult();
 	
 	return 0;
 }

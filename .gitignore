@@ -1,1 +1,4 @@
 ProjectForTest
+*.suo
+*.vs/
+ring_buffer
