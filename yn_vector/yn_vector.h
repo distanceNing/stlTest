@@ -21,18 +21,21 @@ public:
 	{
 		size_ = 0;
 		capacity_ = init_size;
-		data_ = static_cast<pointer> (alloc::allocate(capacity_ * sizeof(value_type)));
+		data_ = alloctor_.allocate(init_size);
 		//placement new
 		for (size_t i = 0;i < init_size;++i)
 		{
-			 new (data_+i) value_type(init_value);
+			 alloctor_.construct(data_+i,init_value);
 		}
 	}
 
 	~Vector(){
 		size_ = 0;
 		capacity_ = 0;
-		alloc::deallocate(data_);
+		for (size_t i = 0;i < size_;++i){
+			alloctor_.destroy(data_ + i);
+		}
+		alloctor_.deallocate(data_,1);
 	}
 
 	size_t size() const
@@ -75,6 +78,7 @@ public:
 	void sort();
 private:
 	void remalloc(size_t size);
+	Alloctor alloctor_;
 	pointer data_;
 	size_t size_; 
 	size_t capacity_;
@@ -90,12 +94,10 @@ void Vector<T>::remalloc(size_t size)
 	{
 		count= static_cast<size_t> (kGrowFactors*count);
 	} while (count <= capacity_ + size);
-	
-	
-	pointer p = static_cast<pointer>(alloc::allocate(sizeof(value_type)*count));
+	pointer p = static_cast<pointer>(alloctor_.allocate(count));
 	assert(p != NULL);
 	memcpy(p, data_, sizeof(value_type)*size_);
-	delete []data_;
+	alloctor_.deallocate(data_, 0);
 	data_ = p;
 	capacity_ = count;
 }

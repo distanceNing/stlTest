@@ -22,6 +22,6 @@ int main()
 		std::cout << ar[i] << "\t";
 	}
 	printTestResult();
-	
+	getchar();
 	return 0;
 }
