@@ -3,6 +3,8 @@
 #include "../test/test_common.h"
 #include <vector>
 #include <iostream>
+#include <algorithm>
+#include <list>
 int main()
 {
 	ynstl::Vector<int> ar;
@@ -11,7 +13,7 @@ int main()
 	ar.push_back(3);
 	ar.push_back(6);
 	ar.push_back(5);
-
+	
 	ar.insert(0,10,10);
 	EXPECT_EQ_INT(15, ar.size());
 	EXPECT_EQ_INT(19, ar.capacity());

@@ -11,8 +11,16 @@ int main()
 	
    
 	test.TravelBinHeap();
-	cout << "the min element :"<<test.DeleteBinHeapMinNode() << endl;
+	//cout << "the min element :"<<test.deleteMin() << endl;
+	while (!test.empty())
+	{
+		std::cout << "\n";
+		test.deleteMin();
+		test.TravelBinHeap();
+		
+	}
 	
+
 	system("pause");
 	return 0;
 }

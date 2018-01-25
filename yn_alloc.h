@@ -43,7 +43,7 @@ public:
 	template<class U>
 	struct rebind
 	{
-		typedef allocator<U> other;
+	//	typedef allocator<U> other;
 	};
 	
 	pointer allocate(size_type n, const void* hint = 0)

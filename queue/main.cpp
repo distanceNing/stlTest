@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 #include <stdlib.h>
-#include "Queue.h"
+#include "yn_queue.h"
 int main()
 {
 	Queue<int> q(5);
