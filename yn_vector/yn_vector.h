@@ -1,9 +1,7 @@
 #ifndef _YN_VECTOR_H_
 #define _YN_VECTOR_H_
 #include <cassert>
-
-#include "ynstlcommon/alloc.h"
-#include "ynstlcommon/free.h"
+#include <yn_alloc.h>
 
 namespace ynstl{
 
@@ -18,12 +16,12 @@ public:
 	typedef T value_type;
 	typedef T& reference;
 	typedef T* pointer;
-
+	typedef simple_alloc<value_type> Alloctor;
 	Vector(size_t init_size = kInitSize, value_type init_value = value_type())
 	{
 		size_ = 0;
 		capacity_ = init_size;
-		data_ = static_cast<pointer> (common::alloc(capacity_ * sizeof(value_type)));
+		data_ = static_cast<pointer> (alloc::allocate(capacity_ * sizeof(value_type)));
 		//placement new
 		for (size_t i = 0;i < init_size;++i)
 		{
@@ -34,7 +32,7 @@ public:
 	~Vector(){
 		size_ = 0;
 		capacity_ = 0;
-		common::free(data_);
+		alloc::deallocate(data_);
 	}
 
 	size_t size() const
@@ -94,7 +92,7 @@ void Vector<T>::remalloc(size_t size)
 	} while (count <= capacity_ + size);
 	
 	
-	pointer p = static_cast<pointer>(common::alloc(sizeof(value_type)*count));
+	pointer p = static_cast<pointer>(alloc::allocate(sizeof(value_type)*count));
 	assert(p != NULL);
 	memcpy(p, data_, sizeof(value_type)*size_);
 	delete []data_;
