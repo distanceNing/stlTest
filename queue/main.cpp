@@ -4,29 +4,21 @@ using namespace std;
 #include "yn_queue.h"
 int main()
 {
-	Queue<int> q(5);
-	int i = 0;
-	q.In_Queue(1);
-	q.In_Queue(2);
-	q.In_Queue(3);
-	q.In_Queue(4);
-	q.In_Queue(5);
-	q.Out_Queue();
-	q.Out_Queue();
-	q.In_Queue(6);
-	q.In_Queue(7);
-	q.In_Queue(8);
-	q.VisitQueue();
-
-	/*while (!q.IsEmpty())
-	{
-		cout << q.Out_Queue() << endl;
-		i++;
-
-	}*/
-
-
-
+	ynstl::Queue<int> q;
+	q.push(1);
+	q.push(2);
+	q.push(3);
+	q.push(4);
+	q.push(5);
+	q.pop();
+	q.pop();
+	q.push(6);
+	q.push(7);
+	q.push(8);
+	while (!q.empty()){
+		cout << q.front() << endl;
+		q.pop();
+	}
 	system("pause");
 	return 0;
 }
